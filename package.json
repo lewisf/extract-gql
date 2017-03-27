@@ -19,7 +19,9 @@
     "url": "https://github.com/lewisf/extract-gql/issues"
   },
   "homepage": "https://github.com/lewisf/extract-gql#readme",
-  "bin": "./bin/extractgql",
+  "bin": {
+    "extractgql": "./bin/extractgql"
+  },
   "dependencies": {
     "@types/lodash": "^4.14.58",
     "@types/node": "^7.0.11",

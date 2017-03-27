@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 'use strict';
 
-require ('../lib/src/binary.js');
+require(__dirname + '/../lib/src/binary.js');
