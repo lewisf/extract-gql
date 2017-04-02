@@ -6,9 +6,8 @@
   "scripts": {
     "pretest": "npm run compile",
     "test": "mocha --reporter spec --full-trace lib/test/tests.js",
-    "posttest": "npm run lint",
     "compile": "tsc",
-    "lint": "tslint -c tslint.json test/**/*.ts; tslint src/**/*.ts"
+    "lint": "tslint --project tslint.json --type-check -c tslint.json test/**/*.ts; tslint --project tslint.json --type-check src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,12 @@
   },
   "devDependencies": {
     "@types/chai": "^3.4.35",
+    "@types/graphql": "^0.9.0",
     "@types/mocha": "^2.2.40",
-    "es6-promise": "^4.1.0"
+    "chai": "^3.5.0",
+    "es6-promise": "^4.1.0",
+    "mocha": "^3.2.0",
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2"
   }
 }

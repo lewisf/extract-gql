@@ -90,7 +90,7 @@ export default class ExtractFromAST {
         fragmentNames[selection.name.value] = 1;
         const innerFragmentNames = ExtractFromAST.getFragmentNames(
           fragmentDefinitions[selection.name.value].selectionSet,
-          document
+          document,
         );
         fragmentNames = _.merge(fragmentNames, innerFragmentNames);
       } else if (ExtractFromAST.isInlineFragment(selection) || ExtractFromAST.isField(selection)) {
