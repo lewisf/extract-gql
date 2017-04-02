@@ -18,7 +18,6 @@
   "files": [
     "typings.d.ts",
     "index.ts",
-    "test/tests.ts",
-    "src/binary.ts"
+    "test/tests.ts"
   ]
 }

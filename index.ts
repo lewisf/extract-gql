@@ -1,5 +1,7 @@
-import { ExtractGQL } from './src/ExtractGQL';
+import ExtractFromJS from './src/extractFromJS';
+import ExtractFromAST from './src/extractFromAST';
 
 export {
-  ExtractGQL
+  ExtractFromJS,
+  ExtractFromAST
 };

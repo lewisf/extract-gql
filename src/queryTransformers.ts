@@ -4,21 +4,11 @@ import {
   DefinitionNode,
   OperationDefinitionNode,
   DocumentNode,
-  print,
 } from 'graphql';
 
-import {
-  QueryTransformer,
-} from './common';
-
-import {
-  isField,
-  isInlineFragment,
-  isOperationDefinition,
-  isFragmentDefinition,
-} from './extractFromAST';
-
 import { cloneDeep } from 'lodash';
+
+export type QueryTransformer = (doc: DocumentNode) => DocumentNode;
 
 // TODO Most of this implementation has been copped from here:
 // https://github.com/apollostack/apollo-client/blob/master/src/queries/queryTransform.ts
