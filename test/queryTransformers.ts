@@ -9,10 +9,6 @@ import {
 } from 'graphql';
 
 import {
-  isOperationDefinition,
-} from '../src/extractFromAST';
-
-import {
   addTypenameTransformer,
 } from '../src/queryTransformers';
 

@@ -1,21 +1,23 @@
-export function findTaggedTemplateLiteralsInJS(jsCode: string, tag: string): string[] {
-  // m for multiline
-  // g for matching multiple results
-  // capture the text inside the template literal with parentheses
-  const regex = new RegExp(tag + '\\s*\`([\\s\\S]+?)\`', 'mg');
-  const results = [];
+export default class ExtractFromJS {
+  public static findTaggedTemplateLiteralsInJS(jsCode: string, tag: string): string[] {
+    // m for multiline
+    // g for matching multiple results
+    // capture the text inside the template literal with parentheses
+    const regex = new RegExp(tag + '\\s*\`([\\s\\S]+?)\`', 'mg');
+    const results = [];
 
-  let result;
-  // run in a loop to get all results
-  while ((result = regex.exec(jsCode)) !== null) {
-    results.push(result[1]);
+    let result;
+    // run in a loop to get all results
+    while ((result = regex.exec(jsCode)) !== null) {
+      results.push(result[1]);
+    }
+
+    return results;
   }
 
-  return results;
-}
+  public static eliminateInterpolations(templateLiteralContents: string): string {
+    const regex = /\$\{[\s\S]+?\}/mg;
 
-export function eliminateInterpolations(templateLiteralContents: string): string {
-  const regex = /\$\{[\s\S]+?\}/mg;
-
-  return templateLiteralContents.replace(regex, '');
+    return templateLiteralContents.replace(regex, '');
+  }
 }
