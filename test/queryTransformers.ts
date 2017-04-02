@@ -17,7 +17,7 @@ describe('query transformers', () => {
     const assertTransform = (inputQuery: DocumentNode, expected: DocumentNode) => {
       assert.equal(
         print(addTypenameTransformer(inputQuery)),
-        print(expected)
+        print(expected),
       );
     };
 

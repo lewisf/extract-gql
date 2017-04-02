@@ -4,7 +4,7 @@ const { assert } = chai;
 import ExtractFromJS from '../src/extractFromJS';
 
 describe('extractFromJS', () => {
-  it('should be able to find tagged strings inside JS', () => {
+  it('findTaggedTemplateLiteralsInJS should be able to find tagged strings inside JS', () => {
     const jsFile = `
       // Single line
       const query = gql\`xxx\`;
@@ -25,19 +25,68 @@ y\`;
     ]);
   });
 
-  it('should eliminate interpolations', () => {
-    const contents = `
-      {
-        a { b ...c }
-      }
-\${c}
-    `;
+  describe('eliminateInterpolations', () => {
+    it('eliminates a single interpolation', () => {
+      const contents = `
+        {
+          a { b ...c }
+        }
+        \${c}
+      `.trim();
 
-    assert.deepEqual(ExtractFromJS.eliminateInterpolations(contents), `
-      {
-        a { b ...c }
-      }
+      assert.deepEqual(ExtractFromJS.eliminateInterpolations(contents), `
+        {
+          a { b ...c }
+        }
+      `.trim());
+    });
 
-    `);
+    it('eliminates multiple interpolations', () => {
+      const contents = `
+        {
+          a { b ...c }
+        }
+        \${c}
+        \${d}
+      `.trim();
+
+      assert.deepEqual(ExtractFromJS.eliminateInterpolations(contents), `
+        {
+          a { b ...c }
+        }
+      `.trim());
+    });
+  });
+
+  describe('getInterpolations', () => {
+    it('should return interpolations for a single interpolation', () => {
+      const contents = `
+        {
+          a { b ...c }
+        }
+        \${c}
+      `;
+
+      const interpolations = ExtractFromJS.getInterpolations(contents);
+      const expected = ['${c}'];
+
+      assert.sameDeepMembers(interpolations, expected);
+    });
+
+    it('should return interpolations for multiple interpolations', () => {
+      const contents = `
+        {
+          a { b ...c }
+        }
+        \${c}
+        \${d}
+        \${e}
+      `;
+
+      const interpolations = ExtractFromJS.getInterpolations(contents);
+      const expected = ['${c}', '${d}', '${e}'];
+
+      assert.sameDeepMembers(interpolations, expected);
+    });
   });
 });

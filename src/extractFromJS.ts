@@ -16,8 +16,20 @@ export default class ExtractFromJS {
   }
 
   public static eliminateInterpolations(templateLiteralContents: string): string {
-    const regex = /\$\{[\s\S]+?\}/mg;
+    const regex = /\$\{[\s\S]+?\}\n?/gm;
 
-    return templateLiteralContents.replace(regex, '');
+    return templateLiteralContents.replace(regex, '').trim();
+  }
+
+  public static getInterpolations(templateLiteralContents: string): string[] {
+    const regex = /\$\{[\s\S]+?\}/gm;
+
+    let match;
+    const matches = [];
+    while ((match = regex.exec(templateLiteralContents)) != null) {
+      matches.push(match[0]);
+    }
+
+    return matches;
   }
 }
