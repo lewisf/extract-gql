@@ -2,7 +2,7 @@
   "name": "extract-gql",
   "version": "0.0.1",
   "description": "A tool to extract GraphQL documents from projects.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "pretest": "npm run compile",
     "test": "mocha --reporter spec --full-trace lib/test/tests.js",
