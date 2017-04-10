@@ -3,5 +3,6 @@ import ExtractFromAST from './src/extractFromAST';
 
 export {
   ExtractFromJS,
-  ExtractFromAST
+  ExtractFromAST,
+  ExtractGQL
 };
