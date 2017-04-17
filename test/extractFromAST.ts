@@ -1,7 +1,11 @@
 import * as chai from 'chai';
 const { assert } = chai;
 
-import ExtractFromAST from '../src/extractFromAST';
+import {
+  getFragmentNames,
+  getOperationDefinitions,
+  getQueryDefinitions,
+} from '../src/extractFromAST';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 
@@ -26,7 +30,7 @@ describe('extractFromAST', () => {
           }
         }
         `;
-      const fragmentNames = ExtractFromAST.getFragmentNames(document.definitions[0].selectionSet, document);
+      const fragmentNames = getFragmentNames(document.definitions[0].selectionSet, document);
       assert.deepEqual(fragmentNames, {
         'rootDetails': 1,
         'otherRootDetails': 1,
@@ -51,7 +55,7 @@ describe('extractFromAST', () => {
           age
         }
       `;
-      const fragmentNames = ExtractFromAST.getFragmentNames(document.definitions[0].selectionSet, document);
+      const fragmentNames = getFragmentNames(document.definitions[0].selectionSet, document);
       assert.deepEqual(fragmentNames, {
         nameInfo: 1,
         generalAuthorInfo: 1,
@@ -77,7 +81,7 @@ describe('extractFromAST', () => {
           }
         }
       `;
-      const fragmentNames = ExtractFromAST.getFragmentNames(document.definitions[0].selectionSet, document);
+      const fragmentNames = getFragmentNames(document.definitions[0].selectionSet, document);
       assert.deepEqual(fragmentNames, {
         nameInfo: 1,
         otherNameInfo: 1,
@@ -116,7 +120,7 @@ describe('extractFromAST', () => {
             name
           }
         }`;
-      const queries = ExtractFromAST.getQueryDefinitions(document);
+      const queries = getQueryDefinitions(document);
       assert.equal(queries.length, 2);
       assert.equal(print(queries[0]), print(query1.definitions[0]));
       assert.equal(print(queries[1]), print(query2.definitions[0]));

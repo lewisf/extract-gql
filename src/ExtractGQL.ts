@@ -1,5 +1,8 @@
 import * as fs from 'fs';
-import ExtractFromJS from './extractFromJS';
+import {
+  findTaggedTemplateLiteralsInJS,
+  eliminateInterpolations
+} from './extractFromJS';
 
 export type ExtractGQLOptions = {
   templateTag: string
@@ -20,8 +23,8 @@ export default class ExtractGQL {
   public fromJS(filePath: string) {
     const body = fs.readFileSync(filePath).toString('utf-8');
 
-    return ExtractFromJS.findTaggedTemplateLiteralsInJS(body, this.templateTag)
-      .map(ExtractFromJS.eliminateInterpolations)
+    return findTaggedTemplateLiteralsInJS(body, this.templateTag)
+      .map(eliminateInterpolations)
       .join('\n');
   }
 

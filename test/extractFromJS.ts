@@ -1,7 +1,11 @@
 import * as chai from 'chai';
 const { assert } = chai;
 
-import ExtractFromJS from '../src/extractFromJS';
+import {
+  findTaggedTemplateLiteralsInJS,
+  eliminateInterpolations,
+  getInterpolations,
+} from '../src/extractFromJS';
 
 describe('extractFromJS', () => {
   it('findTaggedTemplateLiteralsInJS should be able to find tagged strings inside JS', () => {
@@ -18,7 +22,7 @@ y\`;
       const query3 = gql \`zzz\`;
     `;
 
-    assert.deepEqual(ExtractFromJS.findTaggedTemplateLiteralsInJS(jsFile, 'gql'), [
+    assert.deepEqual(findTaggedTemplateLiteralsInJS(jsFile, 'gql'), [
       'xxx',
       'y\ny\ny',
       'zzz',
@@ -34,7 +38,7 @@ y\`;
         \${c}
       `.trim();
 
-      assert.deepEqual(ExtractFromJS.eliminateInterpolations(contents), `
+      assert.deepEqual(eliminateInterpolations(contents), `
         {
           a { b ...c }
         }
@@ -50,7 +54,7 @@ y\`;
         \${d}
       `.trim();
 
-      assert.deepEqual(ExtractFromJS.eliminateInterpolations(contents), `
+      assert.deepEqual(eliminateInterpolations(contents), `
         {
           a { b ...c }
         }
@@ -67,7 +71,7 @@ y\`;
         \${c}
       `;
 
-      const interpolations = ExtractFromJS.getInterpolations(contents);
+      const interpolations = getInterpolations(contents);
       const expected = ['${c}'];
 
       assert.sameDeepMembers(interpolations, expected);
@@ -83,7 +87,7 @@ y\`;
         \${e}
       `;
 
-      const interpolations = ExtractFromJS.getInterpolations(contents);
+      const interpolations = getInterpolations(contents);
       const expected = ['${c}', '${d}', '${e}'];
 
       assert.sameDeepMembers(interpolations, expected);
